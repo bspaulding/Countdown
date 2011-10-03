@@ -1,17 +1,16 @@
-var card_clicked = function() {
-  console.log('card_clicked');
-  if ( this.getAttribute('class').indexOf('flipped') >= 0 ) {
-    this.setAttribute('class', 'card');
+var flip = function() {
+  var card = document.querySelectorAll('.card')[0];
+  if ( card.getAttribute('class').indexOf('flipped') >= 0 ) {
+    card.setAttribute('class', 'card');
   } else {
-    this.setAttribute('class', 'card flipped');
+    card.setAttribute('class', 'card flipped');
   }
 }
 
 var main = function() {
-  var cards = document.querySelectorAll('.card');
-  for ( var i = 0; i < cards.length; i += 1 ) {
-    var card = cards[i];
-    card.addEventListener('click', card_clicked);
+  var card_flippers = document.querySelectorAll('.card_flipper');
+  for ( var i = 0; i < card_flippers.length; i += 1 ) {
+    card_flippers[i].addEventListener('click', flip); 
   }
 }
 
