@@ -1,10 +1,24 @@
+@font-face {
+  font-family: LocalFutura;
+  src: url('../fonts/Futura/Futura.ttc');
+  font-weight: 400;
+}
+
 html, body {
-  margin: 0px;
-  padding: 0px;
+  margin: 0px; padding: 0px;
 }
 
 body {
-  background: #000;
+  margin: 0px; padding: 0px;
+  min-height: 100%;
+
+  background: #EFEFEF;
+  background-image: url('../images/texture-bg.png');
+  -webkit-box-shadow: 0px 0px 22px #333 inset;
+
+  font-family: Futura;
+  color: #EFEFEF;
+  text-shadow: 0px 0px 10px #333;
 
   -webkit-perspective: 1000;
   perspective: 1000;
@@ -12,53 +26,38 @@ body {
   z-index: 1;
 }
 
-.card {
-  margin: 20px auto;
-  width: 95%;
-  height: 90%;
-
-  -webkit-transform-style: preserve-3d;
-  -webkit-transition: all 0.5s ease-in-out;
+#controls {
+  position: absolute; bottom: 88px; left: 0px; right: 0px;
+  text-align: center;
 }
 
-.card .face.back { 
-  display: block;
-  -webkit-transform: rotateY(-180deg);
-}
+/* Page View */
 
-.card.flipped {
-  -webkit-transform: rotateY(-180deg);
-}
+.page-view::-webkit-scrollbar { display: none; }
 
-.card .face {
-  position: absolute;
+.page-view {
+  position: relative; margin: 0px auto; height: 100%;
+  overflow: hidden;
+/*  overflow-x: scroll;
+  -webkit-overflow-scrolling: touch;*/
+
+  /*background: rgba(255,255,255,0.3);*/
+
   width: 100%;
-  height: 100%;
-
-  -webkit-border-radius: 20px;
-  border-radius: 20px;
-  -webkit-backface-visibility: hidden;
 }
 
-#front {
-  background: #CCC;
+.page-view ul {
+  margin: 0px; padding: 0px; height: 100%;
+  -webkit-transition: -webkit-transform 0.5s ease;
+
+  width: 600px;
 }
 
-#back { 
-  background: green;
+.page-view ul li {
+  margin: 0px; padding: 0px; height: 100%;
+  float: left;
+  display: block;
+  text-align: center;
+
+  width: 300px;
 }
-
-#info {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-
-  width: 20px;
-  height: 20px;
-
-  -webkit-border-radius: 20px;
-
-  background: rgba(0,0,0,0.6);
-  color: white;
-}
-.card.flipped #info { display: none; }

@@ -5,16 +5,35 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   <link rel="stylesheet" href="stylesheets/styles.css"/>
-  <script type="text/javascript" src="javascripts/countdownmin.js"></script>
-  <script type="text/javascript" src="javascripts/app.js"></script>
+  <script src="javascripts/swipe_listener.js"></script>
+  <script src="javascripts/jquery-1.7.2.min.js"></script>
+  <script src="javascripts/ember.min.js"></script>
+  <script src="javascripts/countdownmin.js"></script>
+  <script src="javascripts/app.js"></script>
 </head>
 <body>
-<div class="card">
+<script type="text/x-handlebars" data-template-name="page-view">
+  {{collection contentBinding="content" tagName="ul" itemViewClass="CD.EventView" style="listStyle"}}
+</script>
+<script type="text/x-handlebars" data-template-name="events-view">
+  {{collection contentBinding="CD.EventsController.content" tagName="ul" itemViewClass="CD.EventView" id="events"}}
+</script>
+<script type="text/x-handlebars" data-template-name="event-view">
+  {{content.name}} ({{content.days}} days until {{content.date}})
+</script>
+<script type="text/x-handlebars">
+  {{view CD.PageView contentBinding="CD.EventsController.content" itemViewClassName="CD.EventView"}}
+  <div id="controls">
+    {{#view Ember.Button target="CD.EventsController" action="addEvent"}}Add Event{{/view}}
+    {{#view Ember.Button target="CD.EventsController" action="removeEvent"}}Remove Event{{/view}}
+  </div>
+</script>
+<div class="card" style="display:none;">
   <div id="front" class="front face">
-    Front
     <div id="info" class="card_flipper">i</div>
   </div>
   <div id="back" class="back face">
+    <div id="done" class="card_flipper">Done</div>
     Back
   </div>
 </div>
