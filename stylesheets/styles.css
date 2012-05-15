@@ -33,14 +33,13 @@ body {
 
 /* Page View */
 
-.page-view::-webkit-scrollbar { display: none; }
-
 .page-view {
   position: relative; margin: 0px auto; height: 100%;
   overflow: hidden;
-/*  overflow-x: scroll;
-  -webkit-overflow-scrolling: touch;*/
 
+/*  overflow-x: scroll;
+  -webkit-overflow-scrolling: touch;
+*/
   /*background: rgba(255,255,255,0.3);*/
 
   width: 100%;

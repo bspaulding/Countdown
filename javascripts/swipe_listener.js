@@ -28,10 +28,23 @@ function addSwipeListener(el, listener) {
     } else {
       dx = e.touches[0].pageX - startX;
       var dy = e.touches[0].pageY - startY;
+
+      var list = $(e.touches[0].target).parent();
+      var currentTransform = _.css(list, '-webkit-transform');
+      if ( !currentTransform ) {
+        currentTransform = 'translate3d(' + dx + 'px,0px,0px);';
+      } else {
+        var split = currentTransform.split(',');
+        var currentDx = parseInt([0].split('(')[1]);
+        split[0] = split[0].split('(')[0] + '(' + (currentDx + dx) + 'px';
+        currentTransform = split.join(',');
+      }
+      _.css(list, '-webkit-transform', currentTransform);
+
       if (direction == null) {
         direction = dx;
         e.preventDefault();
-      } else if ((direction < 0 && dx > 0) || (direction > 0 && dx < 0) || Math.abs(dy) > 15) {
+      } else if ((direction < 0 && dx > 0) || (direction > 0 && dx < 0) || Math.abs(dy) > 22) {
         cancelTouch();
       }
     }
