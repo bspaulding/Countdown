@@ -14,7 +14,8 @@
   <script>
     // Disable scrolling on the main window.
     document.addEventListener('DOMContentLoaded', function() {
-      document.addEventListener('touchmove', function(e) { e.preventDefault(); });
+      document.addEventListener('touchstart', function() {}, false);
+      document.addEventListener('touchmove', function(e) { e.preventDefault(); }, false);
       window.scrollTo(0,0);
     });
   </script>
@@ -38,9 +39,10 @@
 </script>
 <script type="text/x-handlebars">
   {{view CD.PageView contentBinding="CD.EventsController.content" itemViewClassName="CD.EventView" currentIndexBinding="CD.EventsController.currentIndex"}}
-  <div id="controls">
-    {{#view CD.ControlButton target="CD.EventsController" action="addEvent"}}&#43;{{/view}}
-  </div>
+  <ul id="controls">
+    {{#view CD.ControlButton target="CD.EventsController" action="addEvent"}}+{{/view}}
+    {{#view CD.ControlButton target="CD.EventsController" action="removeEvent"}}-{{/view}}
+  </ul>
 </script>
 </body>
 </html>

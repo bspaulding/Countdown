@@ -1,3 +1,9 @@
+@font-face {
+  font-family: AppleSymbols;
+  font-weight: 400;
+  src: url('../fonts/apple-symbols/apple-symbols-compact.ttf');
+}
+
 html, body {
   margin: 0px; padding: 0px;
 }
@@ -24,11 +30,31 @@ body {
   position: absolute; bottom: 0; left: 0; right: 0;
   text-align: center;
   line-height: 1.5em;
-  padding-bottom: .25em;
+  padding: 0px;
+  margin: 0px;
 
-  font-size: 3em;
+  cursor: pointer;
+
+  font-family: AppleSymbols;
+  font-size: 2.5em;
   font-weight: bold;
   text-shadow: 0px -1px 0px #000;
+
+  list-style-type: none;
+}
+
+#controls li { display: inline; margin-right: 20px; }
+#controls li:last-child { margin-right: 0px; }
+
+#controls a:link,
+#controls a:visited { color: inherit; text-decoration: none; }
+
+#controls a:active,
+#controls a:hover,
+#controls div:active,
+#controls div:hover {
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  text-shadow: 0px -1px 0px #000, 0px 0px 10px white;
 }
 
 /* Page View */

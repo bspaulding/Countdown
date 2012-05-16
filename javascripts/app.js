@@ -206,7 +206,6 @@ CD.EditableTag = Ember.View.extend({
 });
 
 CD.ControlButton = Ember.View.extend(Ember.TargetActionSupport, {
-  tagName: 'a',
-  click:    function() { this.triggerAction(); },
-  touchEnd: function() { this.triggerAction(); }
+  tagName: 'li',
+  click: function() { this.triggerAction(); }
 })
