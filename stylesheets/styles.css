@@ -13,12 +13,12 @@ body {
   min-height: 100%;
 
   background: #EFEFEF;
-  background-image: url('../images/texture-bg.png');
+  background-image: url('../images/texture-bg.jpg');
   -webkit-box-shadow: 0px 0px 22px #333 inset;
 
   font-family: Futura;
   color: #EFEFEF;
-  text-shadow: 0px 0px 10px #333;
+  text-shadow: 0px -1px 0px #000;
 
   -webkit-perspective: 1000;
   perspective: 1000;
@@ -27,8 +27,14 @@ body {
 }
 
 #controls {
-  position: absolute; bottom: 88px; left: 0px; right: 0px;
+  position: absolute; bottom: 0; left: 0; right: 0;
   text-align: center;
+  line-height: 1.5em;
+  padding-bottom: .25em;
+
+  font-size: 3em;
+  font-weight: bold;
+  text-shadow: 0px -1px 0px #000;
 }
 
 /* Page View */

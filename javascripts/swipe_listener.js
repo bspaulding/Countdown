@@ -29,17 +29,19 @@ function addSwipeListener(el, listener) {
       dx = e.touches[0].pageX - startX;
       var dy = e.touches[0].pageY - startY;
 
-      var list = $(e.touches[0].target).parent();
-      var currentTransform = _.css(list, '-webkit-transform');
-      if ( !currentTransform ) {
-        currentTransform = 'translate3d(' + dx + 'px,0px,0px);';
-      } else {
-        var split = currentTransform.split(',');
-        var currentDx = parseInt([0].split('(')[1]);
-        split[0] = split[0].split('(')[0] + '(' + (currentDx + dx) + 'px';
-        currentTransform = split.join(',');
-      }
-      _.css(list, '-webkit-transform', currentTransform);
+      // This was an attempt to move the wrapper under the user's finger.
+      // Didn't work. Not sure why.
+      // var list = $(e.touches[0].target).parent();
+      // var currentTransform = _.css(list, '-webkit-transform');
+      // if ( !currentTransform ) {
+      //   currentTransform = 'translate3d(' + dx + 'px,0px,0px);';
+      // } else {
+      //   var split = currentTransform.split(',');
+      //   var currentDx = parseInt([0].split('(')[1]);
+      //   split[0] = split[0].split('(')[0] + '(' + (currentDx + dx) + 'px';
+      //   currentTransform = split.join(',');
+      // }
+      // _.css(list, '-webkit-transform', currentTransform);
 
       if (direction == null) {
         direction = dx;

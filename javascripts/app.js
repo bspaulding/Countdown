@@ -1,17 +1,6 @@
-if ( !Function.prototype.bind ) {
-  Function.prototype.bind = function(scope) {
-    var _function = this;
-
-    return function() {
-      return _function.apply(scope, arguments);
-    }
-  }
-}
-
 var CD = Ember.Application.create({
   ready: function() {
     this._super();
-
     CD.EventsController.loadEvents();
   }
 });
@@ -49,7 +38,14 @@ CD.Event = Ember.Object.extend({
     this.set('timespanTimerId', countdown(callback, this.get('timestamp'), countdown.DAYS));
   }.observes('timestamp'),
 
-  date: function() {
+  date: function(key, value) {
+    if ( arguments.length > 1 ) { // setter
+      var newDate = new Date(value);
+      if ( !isNaN(newDate.getTime()) ) {
+        this.set('timestamp', newDate);
+      }
+    }
+
     var date = this.get('timestamp');
     if ( !date ) { return ''; }
 
@@ -97,7 +93,7 @@ CD.EventsController = Ember.ArrayProxy.create({
     }
 
     return JSON.stringify(collection);
-  }.property('content', '@each'),
+  }.property('content', 'content.@each.name', 'content.@each.timestamp'),
 
   jsonChanged: function() {
     if ( !window.localStorage ) { return; }
@@ -109,11 +105,14 @@ CD.EventsController = Ember.ArrayProxy.create({
     var event = CD.Event.create({ name: 'Untitled Event' });
     event.set('timestamp', (new Date('July 30, 2012')));
     this.addObject(event);
+    this.set('currentIndex', this.indexOf(event));
   },
 
   removeEvent: function() {
     this.removeObject(this.objectAt(0));
-  }
+  },
+
+  currentIndex: null
 });
 
 CD.EventView = Ember.View.extend({
@@ -143,13 +142,17 @@ CD.PageView = Ember.View.extend({
 
   contentChanged: function() {
     this.listItemStyleChanged();
-  }.observes('content'),
+  }.observes('content', 'content.length'),
 
   currentIndex: null,
 
   didInsertElement: function() {
     this.set('currentIndex', 0);
     window.addEventListener('resize', function(event) { this.updateFrame(event); }.bind(this));
+
+    this.$('ul')[0].addEventListener('DOMNodeInserted', function() {
+      this.listItemStyleChanged();
+    }.bind(this));
 
     addSwipeListener(this.$()[0], function(event) {
       if ( event.direction === 'left' ) {
@@ -186,3 +189,24 @@ CD.PageView = Ember.View.extend({
     this.$('ul').css('-webkit-transform', 'translate3d(-' + this.get('outerWidth') * this.get('currentIndex') + 'px, 0px, 0px)');
   }.observes('currentIndex')
 });
+
+CD.EditableTag = Ember.View.extend({
+  template: Ember.Handlebars.compile("{{value}}"),
+  attributeBindings: ['contenteditable'],
+  contenteditable: 'true',
+  content: null,
+  key: null,
+  value: function() {
+    return this.get('content').get(this.get('key'));
+  }.property('content', 'key'),
+
+  keyUp: function() {
+    this.get('content').set(this.get('key'), this.$()[0].textContent);
+  }
+});
+
+CD.ControlButton = Ember.View.extend(Ember.TargetActionSupport, {
+  tagName: 'a',
+  click:    function() { this.triggerAction(); },
+  touchEnd: function() { this.triggerAction(); }
+})

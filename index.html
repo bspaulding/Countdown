@@ -1,41 +1,23 @@
-<html>
+<html manifest="countdown.manifest">
 <head>
   <title>Countdown</title>
   <meta name="viewport" content="width=device-width,user-scalable=no">
-  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="no" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   <link rel="stylesheet" href="stylesheets/styles.css"/>
-  <script>
-    var _ = {};
-    _.map = function(c,f) { var r = []; for ( var i = 0; i < c.length; i += 1) { r.push(f(c[i])); } return r; };
-    _.reject = function(c,f) { var r = []; for ( var i = 0; i < c.length; i += 1) { if ( !f(c[i]) ) { r.push(c[i]); } } return r; };
-    _.select = function(c,f) { var r = []; for ( var i = 0; i < c.length; i += 1) { if (  f(c[i]) ) { r.push(c[i]); } } return r; };
-    _.merge = function(c) { var o = {}; for ( var i = 0; i < c.length; i += 1 ) { for ( var k in c[i] ) { o[k] = c[i][k]; } } return o; }
-
-    _.css = function(e,k,v) {
-      var style = e.getAttribute('style');
-      var sanitized = _.reject(style.split(';'), function(i) { return i === ""; });
-      sanitized = _.map(sanitized, function(i) { return i.trim(); });
-      var objects = _.map(sanitized, function(i) { var h = {}; var s = i.split(':'); h[s[0].trim()] = s[1].trim(); return h; });
-      var styleObject = _.merge(objects);
-
-      if ( v ) {
-        styleObject[k] = v;
-        style = '';
-        for ( var key in styleObject ) {
-          style += key + ':' + styleObject[key] + ';';
-        }
-        e.setAttribute('style', style);
-      }
-
-      return styleObject[k];
-    }
-  </script>
+  <script src="javascripts/utilities.js"></script>
   <script src="javascripts/swipe_listener.js"></script>
   <script src="javascripts/jquery-1.7.2.min.js"></script>
   <script src="javascripts/ember.min.js"></script>
   <script src="javascripts/countdownmin.js"></script>
   <script src="javascripts/app.js"></script>
+  <script>
+    // Disable scrolling on the main window.
+    document.addEventListener('DOMContentLoaded', function() {
+      document.addEventListener('touchmove', function(e) { e.preventDefault(); });
+      window.scrollTo(0,0);
+    });
+  </script>
 </head>
 <body>
 <script type="text/x-handlebars" data-template-name="page-view">
@@ -45,23 +27,16 @@
   {{collection contentBinding="CD.EventsController.content" tagName="ul" itemViewClass="CD.EventView" id="events"}}
 </script>
 <script type="text/x-handlebars" data-template-name="event-view">
-  {{content.name}} ({{content.days}} days until {{content.date}})
+  <h1 style="font-size: 5em; margin-top: 0.36em; margin-bottom: 0.18em;">{{content.days}}</h1>
+  <p>days until</p>
+  {{view CD.EditableTag tagName="h2" contentBinding="content" key="name"}}
+  {{view CD.EditableTag tagName="h4" contentBinding="content" key="date"}}
 </script>
 <script type="text/x-handlebars">
-  {{view CD.PageView contentBinding="CD.EventsController.content" itemViewClassName="CD.EventView"}}
+  {{view CD.PageView contentBinding="CD.EventsController.content" itemViewClassName="CD.EventView" currentIndexBinding="CD.EventsController.currentIndex"}}
   <div id="controls">
-    {{#view Ember.Button target="CD.EventsController" action="addEvent"}}Add Event{{/view}}
-    {{#view Ember.Button target="CD.EventsController" action="removeEvent"}}Remove Event{{/view}}
+    {{#view CD.ControlButton target="CD.EventsController" action="addEvent"}}&#43;{{/view}}
   </div>
 </script>
-<div class="card" style="display:none;">
-  <div id="front" class="front face">
-    <div id="info" class="card_flipper">i</div>
-  </div>
-  <div id="back" class="back face">
-    <div id="done" class="card_flipper">Done</div>
-    Back
-  </div>
-</div>
 </body>
 </html>
