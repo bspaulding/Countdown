@@ -113,7 +113,7 @@ CD.EventsController = Ember.ArrayProxy.create({
   },
 
   removeEvent: function() {
-    this.removeObject(this.objectAt(0));
+    this.removeObject(this.objectAt(this.get('currentIndex')));
   },
 
   currentIndex: null
