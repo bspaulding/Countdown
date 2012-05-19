@@ -60,29 +60,43 @@ body {
 /* Page View */
 
 .page-view {
-  position: relative; margin: 0px auto; height: 100%;
+  position: relative; margin: 0px auto; height: 100%; width: 100%;
   overflow: hidden;
 
 /*  overflow-x: scroll;
   -webkit-overflow-scrolling: touch;
 */
   /*background: rgba(255,255,255,0.3);*/
-
-  width: 100%;
 }
 
-.page-view ul {
-  margin: 0px; padding: 0px; height: 100%;
+.page-view ul.pages {
+  margin: 0px; padding: 0px; height: 80%;
   -webkit-transition: -webkit-transform 0.5s ease;
-
-  width: 600px;
 }
 
-.page-view ul li {
+.page-view ul.pages li {
   margin: 0px; padding: 0px; height: 100%;
   float: left;
   display: block;
   text-align: center;
-
-  width: 300px;
 }
+
+.page-view ul.page-control {
+  height: 20%;
+  list-style-type: none;
+  margin: 0px; padding: 0px;
+  text-align: center;
+}
+
+.page-view ul.page-control li {
+  -webkit-border-radius: 50%;
+  display: inline-block;
+  min-width: 10px;
+  max-height: 10px;
+  background: rgba(255,255,255,0.6);
+  margin: 0px 5px;
+  -webkit-transition: background 1s ease;
+  -webkit-box-shadow: 0px -1px 0px black;
+}
+
+.page-view ul.page-control li.is-active { background: rgba(255,255,255,1); }

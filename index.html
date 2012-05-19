@@ -26,7 +26,10 @@
 </head>
 <body>
 <script type="text/x-handlebars" data-template-name="page-view">
-  {{collection contentBinding="content" tagName="ul" itemViewClass="CD.EventView" style="listStyle"}}
+  {{collection contentBinding="content" tagName="ul" itemViewClass="CD.EventView" style="listStyle" class="pages"}}
+  {{#collection contentBinding="content" tagName="ul" class="page-control" itemClassBinding="content.isActive"}}
+    <span>&nbsp;</span>
+  {{/collection}}
 </script>
 <script type="text/x-handlebars" data-template-name="events-view">
   {{collection contentBinding="CD.EventsController.content" tagName="ul" itemViewClass="CD.EventView" id="events"}}

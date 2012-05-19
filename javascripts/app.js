@@ -60,7 +60,11 @@ CD.Event = Ember.Object.extend({
       name: this.get('name'),
       timestampString: this.get('timestamp')
     };
-  }
+  },
+
+  isActive: function() {
+    return CD.EventsController.indexOf(this) === CD.EventsController.get('currentIndex');
+  }.property('CD.EventsController.currentIndex', 'CD.EventsController.content')
 });
 
 CD.EventsController = Ember.ArrayProxy.create({
@@ -130,14 +134,14 @@ CD.PageView = Ember.View.extend({
     return 'width: ' + this.get('outerWidth') * this.get('content').length + 'px;';
   }.property('outerWidth', 'content.length'),
   listStyleChanged: function() {
-    this.$('ul').attr('style', this.get('listStyle'));
+    this.$('ul.pages').attr('style', this.get('listStyle'));
   }.observes('listStyle'),
 
   listItemStyle: function() {
     return 'width: ' + this.get('outerWidth') + 'px;';
   }.property('outerWidth'),
   listItemStyleChanged: function() {
-    this.$('ul li').attr('style', this.get('listItemStyle'));
+    this.$('ul.pages li').attr('style', this.get('listItemStyle'));
   }.observes('listItemStyle'),
 
   contentChanged: function() {
@@ -150,7 +154,7 @@ CD.PageView = Ember.View.extend({
     this.set('currentIndex', 0);
     window.addEventListener('resize', function(event) { this.updateFrame(event); }.bind(this));
 
-    this.$('ul')[0].addEventListener('DOMNodeInserted', function() {
+    this.$('ul.pages')[0].addEventListener('DOMNodeInserted', function() {
       this.listItemStyleChanged();
     }.bind(this));
 
@@ -186,7 +190,7 @@ CD.PageView = Ember.View.extend({
   },
 
   currentIndexChanged: function() {
-    this.$('ul').css('-webkit-transform', 'translate3d(-' + this.get('outerWidth') * this.get('currentIndex') + 'px, 0px, 0px)');
+    this.$('ul.pages').css('-webkit-transform', 'translate3d(-' + this.get('outerWidth') * this.get('currentIndex') + 'px, 0px, 0px)');
   }.observes('currentIndex')
 });
 
