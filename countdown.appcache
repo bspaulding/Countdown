@@ -1,4 +1,8 @@
 CACHE MANIFEST
 # Version 1.0.0.dev
 
+NETWORK:
+*
+
+CACHE:
 images/texture-bg.png
