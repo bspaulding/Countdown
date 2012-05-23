@@ -6,7 +6,7 @@ NETWORK:
 
 CACHE:
 images/texture-bg.png
-styles/styles.css
+stylesheets/styles.css
 javascripts/utilities.js
 javascripts/swipe_listener.js
 javascripts/jquery-1.7.2.min.js
